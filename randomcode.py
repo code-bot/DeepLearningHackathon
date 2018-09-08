@@ -51,23 +51,33 @@ y_train = output_pipe.fit_transform(y)
 
 # model.save('model_sgd_mse')
 
-
+from PIL import Image
+def load_image( infilename ) :
+    img = Image.open( infilename )
+    img.load()
+    data = np.asarray( img, dtype="float64" )
+    data = data.mean(axis=2)
+    return data
 
 def get_score(img):
     model = load_model('model_sgd_mse')
 
-    pred_data =X_train[0, :, :, :].reshape(1, -1)
+    results = model.predict(img.reshape(1, -1))
+    sad = load_image(os.path.join(os.getcwd(), 'sad.jpg'))
+    happy = load_image(os.path.join(os.getcwd(), 'happy.jpg'))
+    happy = model.predict(happy.reshape(1, -1))
+    sad = model.predict(sad.reshape(1,-1))
 
-    results = model.predict(img)
-    
+    happy_score = 100 - ((happy - results) ** 2.).sum() ** .5
+    sad_score = 100 - ((sad - results) ** 2.).sum() ** .5
 
     import pdb; pdb.set_trace()
 
+
+
+
 if __name__=="__main__":
-    get_score('hello')
-
-
-
+    get_score(load_image(os.path.join(os.getcwd(), 'sad.jpg')))
 
 
 
