@@ -12,20 +12,24 @@ def load_key_features(s_file, b_filter=False):
 
 
 def stringToNAF(s_string):
-    return np.reshape(np.fromstring(s_string, dtype=int,sep=' '), (96, 96))
+    return np.reshape(np.fromstring(s_string, dtype=np.float,sep=' '), (96, 96))
 
 def get_training(b_filter):
     df_data = load_key_features('training.csv', b_filter)
     xTrain = df_data[df_data.columns[-1]]
     yTrain = df_data[df_data.columns[:-1]]
     xTrain = xTrain.apply(stringToNAF)
-    return xTrain, yTrain
+    i_original_length = xTrain.shape[0]
+    xTrain = np.row_stack(xTrain.values).reshape(i_original_length, 96, 96, 1)
+    return xTrain, yTrain.values.reshape(i_original_length, 30)
 
 def get_test():
     df_data = load_key_features('test.csv')
     df_data = df_data.set_index('ImageId')
     xTest = df_data['Image']
     xTest = xTest.apply(stringToNAF)
+    i_original_length = xTest.shape[0]
+    xTest = np.row_stack(xTest.values).reshape(i_original_length, 96, 96, 1)
     return xTest
 
 def load(b_filter=True):
