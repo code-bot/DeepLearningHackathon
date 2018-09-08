@@ -11,3 +11,7 @@ def home():
     
 	return render_template('home.html')
 
+@app.route('/webcam')
+def webcam():
+	return render_template('webcam.html')
+
