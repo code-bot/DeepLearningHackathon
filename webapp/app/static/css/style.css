@@ -1,0 +1,45 @@
+body {
+	height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+	background-image: url('../images/background-blue.jpeg');
+}
+
+.title {
+	color: white;
+	text-align: center;
+}
+
+.game-instructions {
+	height: 100%;
+	border-radius: 5px;
+	background: rgba(11,71,109,0.5);
+}
+
+.instructions {
+	padding:20px;
+	color: #94CFC9;
+	text-align: left;
+}
+
+.start-button {
+	color: white;
+	background: #94CFC9;
+}
+
+.spacer-sm {
+	padding-top:10px;
+	padding-bottom:10px
+}
+
+.spacer {
+	padding-top:20px;
+	padding-bottom:20px
+}
+
+.spacer-lg {
+	padding-top:30px;
+	padding-bottom:30px
+}
