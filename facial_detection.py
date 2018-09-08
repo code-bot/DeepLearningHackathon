@@ -18,16 +18,16 @@ class Model(object):
             except:
                 import pdb; pdb.set_trace()
 
-    def set_optimizer(self, o_optimizer):
-        self.o_optimizer = o_optimizer
+    def set_optimizer(self, s_optimizer):
+        self.s_optimizer = s_optimizer
 
     def compile_model(self, s_loss='mean_squared_error', ls_metrics=['accuracy']):
-        self.o_model.compile(optimizer=self.o_optimizer, loss=s_loss, metrics=ls_metrics)
+        self.o_model.compile(optimizer=self.s_optimizer, loss=s_loss, metrics=ls_metrics)
     
     def train_model(self, df_xTrain, df_yTrain, i_epochs=200, f_validation_split=.2, b_shuffle=True, i_batch_size=20, b_time = False):
         if b_time:
             t_start = time.time()
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         history = self.o_model.fit(df_xTrain.reshape(df_yTrain.shape[0],-1) , df_yTrain, validation_split=f_validation_split, shuffle=b_shuffle, epochs=i_epochs, batch_size=i_batch_size)
         self.history = history
         if b_time:
@@ -37,7 +37,7 @@ class Model(object):
         return history.history
     
     def test_model(self, df_xTest, i_batch_size=20):
-        return self.o_model.predict(df_xTest, batch_size=i_batch_size)
+        return self.o_model.predict(df_xTest.reshape(df_xTest.shape[0],-1), batch_size=i_batch_size)
     
     def evaluate_model(self, df_xTest, df_yTest):
         return self.o_model.evaluate(df_xTest, df_yTest)
@@ -92,15 +92,15 @@ if __name__=="__main__":
     o_model1 = Model(Sequential())
     # import pdb; pdb.set_trace()
     lo_model1_features = [Dense(100, activation="relu", input_shape=(96*96,)), Activation('relu'), Dense(nai_yTrain.shape[1])]
-    o_optimizer_sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    # o_optimizer_sgd = optimizers.SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
     # o_optimizer_
     
     o_model1.set_structure(lo_model1_features)
-    o_model1.set_optimizer(o_optimizer_sgd)
+    o_model1.set_optimizer('rmsprop')
     o_model1.compile_model()
 
 
-    o_model1.train_model(nai_xTrain, nai_yTrain, i_epochs=5)
+    o_model1.train_model(nai_xTrain, nai_yTrain, i_epochs=10)
     df_yPred = o_model1.test_model(nai_xTest)
     import pdb; pdb.set_trace()
 
