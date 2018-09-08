@@ -37,16 +37,11 @@
 					<div class="spacer-lg"></div>
 					<div class="row justify-content-center">
 						<div class="col-md-8">
-							<div class="game-instructions">
-								<div class="instructions">
-									<p>Instructions:</p>
-									<ul>
-										<li>You will see images of emojis</li>
-										<li>Try to match the emoji as well as you can!</li>
-										<li>Gain points based on how close you are</li>
-										<li>Challenge your friends!</li>
-									</ul>
-								</div>
+							<div class="webcam-container">
+								<div class="webcam" id="webcam"></div>
+								<button class="btn btn-primary" onclick="take_snapshot()">Take Snapshot</button>
+								 
+								<div id="results"></div>
 							</div>
 						</div>
 					</div>
@@ -63,5 +58,29 @@
 		</div>
 	</div>
 </body>
+<!-- Webcam.min.js -->
+<script type="text/javascript" src="../static/javascript/webcamjs-master/webcam.min.js"></script>
+<!-- Configure a few settings and attach camera -->
+<script type="text/javascript">
+	Webcam.set({
+		width: 320,
+		height: 240,
+		image_format: 'jpeg',
+		jpeg_quality: 90
+	});
+	Webcam.attach( '#webcam' );
 
+	function take_snapshot() {
+		// take snapshot and get image data
+		Webcam.snap(function(data_uri) {
+			Webcam.upload( data_uri, '/snapshot', function(code, text) {
+				console.log(code);
+				console.log({{image}})
+			// Upload complete!
+			// 'code' will be the HTTP response code from the server, e.g. 200
+			// 'text' will be the raw response content
+		} );
+		});
+	}
+</script>
 </html>

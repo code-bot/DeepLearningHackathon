@@ -29,6 +29,12 @@ body {
 	background: #94CFC9;
 }
 
+.webcam {
+	width: 320px;
+	height: 240px;
+	border: 1px solid black;
+}
+
 .spacer-sm {
 	padding-top:10px;
 	padding-bottom:10px

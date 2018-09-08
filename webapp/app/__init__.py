@@ -15,3 +15,13 @@ def home():
 def game():
 
 	return render_template('game.html')
+
+@app.route('/webcam')
+def webcam():
+	return render_template('webcam.html')
+
+@app.route('/snapshot', methods=['POST'])
+def snapshot():
+	if request.method == 'POST':
+		print(request.files)
+		return 'Received file'
