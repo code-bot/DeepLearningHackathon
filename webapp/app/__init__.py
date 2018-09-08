@@ -15,3 +15,7 @@ def home():
 def webcam():
 	return render_template('webcam.html')
 
+@app.route('/sahaj')
+def sahaj():
+
+	return render_template('sahaj.html')
