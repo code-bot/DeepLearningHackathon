@@ -27,10 +27,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="game-title">
-								<div class="title">
-									<h2>MyMoji</h2>
-								</div>
+							<div class="game-over">
+							</div>
+							<div class="game-emoji">
+								<img class="emoji" src="../static/images/{{firstEmoji}}.png"></img>
 							</div>
 						</div>
 					</div>
@@ -47,13 +47,16 @@
 					</div>
 					<div class="spacer"></div>
 					<div class="row justify-content-center">
-						<button href="/game" class="btn btn-lg start-button">Mojify</button>
+						<button class="btn btn-lg start-button" onclick="next_emoji()">Mojify</button>
 					</div>
 				</div>
 				
 			
 			</div>
 			<div class="col-md-3">
+				<div class="score-text">
+					<h3>Score: <span class="score">0</span></h3>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -75,12 +78,38 @@
 		Webcam.snap(function(data_uri) {
 			Webcam.upload( data_uri, '/snapshot', function(code, text) {
 				console.log(code);
-				console.log({{image}})
+				
+				
 			// Upload complete!
 			// 'code' will be the HTTP response code from the server, e.g. 200
 			// 'text' will be the raw response content
 		} );
 		});
+	}
+
+	function next_emoji() {
+		$.get('/getScore', function(data, status) {
+			if(data == "No Score") {
+				console.log("Take screenshot first");
+			} else {
+				$.get('/nextEmoji', function(data, status){
+					if(data == "No Emoji") {
+						$(".game-emoji").empty();
+						$(".game-over").text("Game Over!");
+						$(".start-button").text("Home");
+						$(".start-button").click(function() {
+							location.href = "/";
+						})
+					}
+					var emoji = data;
+					console.log(emoji);
+					$(".emoji").attr("src", "../static/images/" + emoji + ".png");
+				});
+				score = data;
+				$(".score").text(score);
+
+			}
+		})
 	}
 </script>
 </html>
