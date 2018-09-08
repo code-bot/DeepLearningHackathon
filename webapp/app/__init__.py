@@ -11,3 +11,7 @@ def home():
     
 	return render_template('home.html')
 
+@app.route('/sahaj')
+def sahaj():
+
+	return render_template('sahaj.html')
