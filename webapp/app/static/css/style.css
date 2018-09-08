@@ -24,6 +24,12 @@ body {
 	text-align: left;
 }
 
+.game-over {
+	color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
 .start-button {
 	color: white;
 	background: #94CFC9;

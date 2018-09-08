@@ -22,15 +22,16 @@
 		<div class="spacer"></div>
 		<div class="row">
 			<div class="col-md-3">
+				<div id="results"></div>
 			</div>
 			<div class="col-md-6">
 				<div class="container">
-					<div class="row">
+					<div class="row justify-content-center">
 						<div class="col-md-12">
 							<div class="game-over">
 							</div>
 							<div class="game-emoji">
-								<img class="emoji" src="../static/images/{{firstEmoji}}.png"></img>
+								<img class="emoji" src="../static/images/{{firstEmoji}}.jpg"></img>
 							</div>
 						</div>
 					</div>
@@ -41,7 +42,7 @@
 								<div class="webcam" id="webcam"></div>
 								<button class="btn btn-primary" onclick="take_snapshot()">Take Snapshot</button>
 								 
-								<div id="results"></div>
+								
 							</div>
 						</div>
 					</div>
@@ -78,7 +79,7 @@
 		Webcam.snap(function(data_uri) {
 			Webcam.upload( data_uri, '/snapshot', function(code, text) {
 				console.log(code);
-				
+				$('#results').html('<img src="'+data_uri+'"/>');
 				
 			// Upload complete!
 			// 'code' will be the HTTP response code from the server, e.g. 200
@@ -103,11 +104,11 @@
 					}
 					var emoji = data;
 					console.log(emoji);
-					$(".emoji").attr("src", "../static/images/" + emoji + ".png");
+					$(".emoji").attr("src", "../static/images/" + emoji + ".jpg");
 				});
 				score = data;
 				$(".score").text(score);
-
+				$("#results").empty();
 			}
 		})
 	}
